@@ -1,0 +1,3 @@
+[submodule "SpeedLoad"]
+	path = SpeedLoad
+	url = https://github.com/SoapboxRaceWorld/SpeedLoad.git

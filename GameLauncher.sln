@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLauncher", "GameLauncher\GameLauncher.csproj", "{677A8FDE-96F8-402D-9A83-D24F71EF143C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSpeedLoad", "SpeedLoad\LibSpeedLoad\LibSpeedLoad.csproj", "{08520254-CF63-4AA8-9E5A-C28886962332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{677A8FDE-96F8-402D-9A83-D24F71EF143C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677A8FDE-96F8-402D-9A83-D24F71EF143C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677A8FDE-96F8-402D-9A83-D24F71EF143C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677A8FDE-96F8-402D-9A83-D24F71EF143C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08520254-CF63-4AA8-9E5A-C28886962332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08520254-CF63-4AA8-9E5A-C28886962332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08520254-CF63-4AA8-9E5A-C28886962332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08520254-CF63-4AA8-9E5A-C28886962332}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08093CEB-8703-468B-8A8D-CE26255CD6EC}
+	EndGlobalSection
+EndGlobal
