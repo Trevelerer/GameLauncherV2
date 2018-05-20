@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using GameLauncher.Data;
@@ -34,8 +30,6 @@ namespace GameLauncher.Classes
             }
 
             Config = JsonConvert.DeserializeObject<LauncherConfig>(File.ReadAllText(ConfigFileName));
-
-            Console.WriteLine("Loaded config");
         }
 
         /// <summary>
@@ -70,12 +64,7 @@ namespace GameLauncher.Classes
         /// <summary>
         /// Returns whether the config file exists.
         /// </summary>
-        public bool Exists
-        {
-            get {
-                return File.Exists(ConfigFileName); 
-            }
-        }
+        public bool Exists => File.Exists(ConfigFileName);
 
         public LauncherConfig Config { get; set; }
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
+﻿using GalaSoft.MvvmLight.Ioc;
 using GameLauncher.Services;
 
 namespace GameLauncher.ViewModel
@@ -15,23 +8,18 @@ namespace GameLauncher.ViewModel
         public ViewModelLocator()
         {
             SimpleIoc.Default.Register<IDialogService, DialogService>();
+            SimpleIoc.Default.Register<IAuthService, AuthService>();
+            SimpleIoc.Default.Register<IServerService, ServerService>();
+            SimpleIoc.Default.Register<ILanguageService, LanguageService>();
+
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return SimpleIoc.Default.GetInstance<MainViewModel>();
-            }
-        }
+        public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
 
-        public IDialogService DialogService
-        {
-            get
-            {
-                return SimpleIoc.Default.GetInstance<IDialogService>();
-            }
-        }
+        public IDialogService DialogService => SimpleIoc.Default.GetInstance<IDialogService>();
+        public IAuthService AuthService => SimpleIoc.Default.GetInstance<IAuthService>();
+        public IServerService ServerService => SimpleIoc.Default.GetInstance<IServerService>();
+        public ILanguageService LanguageService => SimpleIoc.Default.GetInstance<ILanguageService>();
     }
 }

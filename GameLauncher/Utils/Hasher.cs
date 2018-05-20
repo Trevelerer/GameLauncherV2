@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameLauncher.Utils
 {
+    /// <summary>
+    /// Hashing utilities.
+    /// </summary>
     public class Hasher
     {
         /// <summary>

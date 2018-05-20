@@ -1,0 +1,41 @@
+{
+	"Name": "English",
+	"Author": "leorblx",
+	"Phrases": {
+		"TEST_PHRASE": "Testing!",
+		"TEST_FORMATTED_PHRASE": "Hello, {0}! Isn't it a nice {1}?",
+		
+		"errors.not_logged_in": "You're not logged in.",
+		"errors.game_not_found": "Can't find nfsw.exe. Please restart the launcher.",
+		"errors.launch_failed": "Failed to launch the game.",
+		"errors.game_crashed": "Looks like the game crashed.",
+		
+		"login.banned": "You have been banned from {0}!",
+		"login.banned.reason": "Reason: {0}",
+		"login.banned.expires": "Ban expires on {0}",
+		"login.banned.permanent": "This is a permanent ban.",
+		"login.success": "Logged in!",
+		
+		"labels.login": "LOG IN",
+		"labels.logout": "LOG OUT",
+		"labels.play": "PLAY",
+		"labels.register": "CLICK HERE TO CREATE AN ACCOUNT",
+		"labels.forgot_password": "I FORGOT MY PASSWORD",
+		"labels.remember_credentials": "REMEMBER MY EMAIL ADDRESS & PASSWORD",
+		"labels.logged_in_as": "Logged in as ",
+		"labels.players_online": "players online",
+		
+		"ping.disabled": "Ping is disabled on non-Windows platforms.",
+		"ping.failed": "Failed to ping the server.",
+		"ping.success": "Ping: ",
+		
+		"status.loading": "Loading...",
+		"status.verifying": "Verifying hashes...",
+		"status.verifying.progress": "Verifying file: {0}",
+		"status.download.progress": "Downloading: {0} ({1} / {2})",
+		"status.download.complete": "Download complete!",
+		"status.ready": "Ready!",
+		
+		"verification.failed": "Failed to verify {0}. Expected hash {1}, got {2}."
+	}
+}

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameLauncher.Services
+﻿namespace GameLauncher.Services
 {
     public interface IDialogService
     {
@@ -12,12 +6,14 @@ namespace GameLauncher.Services
         /// Show an informative MessageBox.
         /// </summary>
         /// <param name="message">The message to show.</param>
-        void ShowNotification(string message);
+        /// <param name="title">The title to use.</param>
+        void ShowNotification(string message, string title = "Notification");
 
         /// <summary>
         /// Show an error MessageBox.
         /// </summary>
         /// <param name="message">The message to show.</param>
-        void ShowError(string message);
+        /// <param name="title">The title to use.</param>
+        void ShowError(string message, string title = "Error");
     }
 }

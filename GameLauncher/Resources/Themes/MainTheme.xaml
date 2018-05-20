@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Colors -->
+    <SolidColorBrush Color="#181b21" x:Key="GrayBorder"/>
+    <SolidColorBrush Color="#FF1FE030" x:Key="ServerOnline"/>
+    <SolidColorBrush Color="#FFEE2F2F" x:Key="ServerOffline"/>
+
+    <!-- Images -->
+    <BitmapImage x:Key="LauncherBg" UriSource="../General_Window.png"/>
+    <BitmapImage x:Key="ButtonBg" UriSource="../button.png"/>
+    <BitmapImage x:Key="RegisterBg" UriSource="../Register_Stroke.png"/>
+    <BitmapImage x:Key="InputBorder" UriSource="../Input_Stroke.png"/>
+    <BitmapImage x:Key="EmailIcon" UriSource="../Icons/Email_Icon.png"/>
+    <BitmapImage x:Key="PasswordIcon" UriSource="../Icons/Pass_Icon.png"/>
+    <BitmapImage x:Key="CircleActive" UriSource="../Circle_Active.png"/>
+    <BitmapImage x:Key="CircleInactive" UriSource="../Circle_Inactive.png"/>
+    <BitmapImage x:Key="NewsBar" UriSource="../News_Bar.png"/>
+    <BitmapImage x:Key="NewsSlide" UriSource="../News_Slide.png"/>
+    <BitmapImage x:Key="NewsSlidePattern" UriSource="../News_Slide_Pattern.png"/>
+    <BitmapImage x:Key="CloseIcon" UriSource="../Icons/Close_Icon.png"/>
+    <BitmapImage x:Key="SettingsIcon" UriSource="../Icons/Settings_Icon.png"/>
+    <BitmapImage x:Key="DiskIcon" UriSource="../Icons/Disk_Icon.png"/>
+    <BitmapImage x:Key="LoadingBar" UriSource="../Loading_Bar.png"/>
+    <BitmapImage x:Key="LoadingBarOutline" UriSource="../Loading_Bar_Outline.png"/>
+    <BitmapImage x:Key="DefaultBanner" UriSource="../Banners/Waterfall_Banner.png"/>
+    <BitmapImage x:Key="SbrwLogo" UriSource="../SBRW_Logo.png"/>
+</ResourceDictionary>

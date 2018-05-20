@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace GameLauncher.Data
 {
@@ -21,5 +15,8 @@ namespace GameLauncher.Data
 
         [JsonProperty("requireTicket")]
         public bool TicketRequired { get; set; }
+
+        [JsonProperty("bannerUrl")]
+        public string BannerUrl { get; set; }
     }
 }

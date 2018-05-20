@@ -41,22 +41,35 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Configuration.cs" />
     <Compile Include="Classes\WebClient.cs" />
+    <Compile Include="Data\LanguagePack.cs" />
     <Compile Include="Data\LauncherConfig.cs" />
     <Compile Include="Data\LoginStatus.cs" />
     <Compile Include="Data\ServerInformation.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\IAuthService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IDownloadService.cs" />
+    <Compile Include="Services\ILanguageService.cs" />
+    <Compile Include="Services\IServerService.cs" />
+    <Compile Include="Services\LanguageService.cs" />
+    <Compile Include="Services\ServerService.cs" />
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SelectionChangedBehaviour.cs" />
     <Compile Include="Utils\FormatUtil.cs" />
     <Compile Include="Utils\Hasher.cs" />
     <Compile Include="Utils\UriExtensions.cs" />
-    <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\AuthState.cs" />
     <Compile Include="ViewModel\DownloadState.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Server.cs" />
-    <Compile Include="ViewModel\UIState.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -70,15 +83,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\Themes\CustomComponents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\MainTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -94,15 +114,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resources\Airport-Cyr.ttf" />
-    <Resource Include="Resources\Akrobat-Black.ttf" />
-    <Resource Include="Resources\Akrobat-Bold.ttf" />
-    <Resource Include="Resources\Akrobat-ExtraBold.ttf" />
-    <Resource Include="Resources\Akrobat-ExtraLight.ttf" />
-    <Resource Include="Resources\Akrobat-Light.ttf" />
-    <Resource Include="Resources\Akrobat-Regular.ttf" />
-    <Resource Include="Resources\Akrobat-SemiBold.ttf" />
-    <Resource Include="Resources\Akrobat-Thin.ttf" />
+    <EmbeddedResource Include="Resources\Languages\English.json" />
+    <Resource Include="Resources\Fonts\Airport-Cyr.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-Black.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-ExtraBold.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-ExtraLight.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-Light.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-SemiBold.ttf" />
+    <Resource Include="Resources\Fonts\Akrobat-Thin.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -113,15 +134,15 @@
     <Resource Include="Resources\General_Window.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\button.png" />
+    <Resource Include="Resources\Button.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Input_Stroke.png" />
     <Resource Include="Resources\Pass_Stroke.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Email_Icon.png" />
-    <Resource Include="Resources\Pass_Icon.png" />
+    <Resource Include="Resources\Icons\Email_Icon.png" />
+    <Resource Include="Resources\Icons\Pass_Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Circle_Active.png" />
@@ -140,24 +161,24 @@
     <Resource Include="Resources\News_Slide_Pattern.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Close_Icon.png" />
-    <Resource Include="Resources\Settings_Icon.png" />
+    <Resource Include="Resources\Icons\Close_Icon.png" />
+    <Resource Include="Resources\Icons\Settings_Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Disk_Icon.png" />
+    <Resource Include="Resources\Icons\Disk_Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Loading_Bar.png" />
     <Resource Include="Resources\Loading_Bar_Outline.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Slideshow\Default_Banner.png" />
+    <Resource Include="Resources\Banners\Default_Banner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Slideshow\Waterfall_Banner.png" />
+    <Resource Include="Resources\Banners\Waterfall_Banner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Slideshow\Aaron_Lewis_Banner.png" />
+    <Resource Include="Resources\Banners\Aaron_Lewis_Banner.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SBRW_Logo.png" />

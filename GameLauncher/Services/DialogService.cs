@@ -9,14 +9,14 @@ namespace GameLauncher.Services
 {
     public class DialogService : IDialogService
     {
-        public void ShowError(string message)
+        public void ShowNotification(string message, string title)
         {
-            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        public void ShowNotification(string message)
+        public void ShowError(string message, string title)
         {
-            MessageBox.Show(message, "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
