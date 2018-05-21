@@ -179,9 +179,10 @@
                     >
                         <StackPanel.Resources>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Margin" Value="0,8,0,0"/>
+                                <Setter Property="Margin" Value="0,0,0,0"/>
                             </Style>
                         </StackPanel.Resources>
+
                         <TextBlock 
                             FontSize="24" 
                             Foreground="#fefefe"
@@ -209,12 +210,18 @@
 
                         <TextBlock 
                             FontSize="12"
+                            Foreground="#fefefe"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Text="{Binding PingText}"
+                        >
+                        </TextBlock>
+
+                        <TextBlock 
+                            FontSize="12"
                             TextAlignment="Center"
                             Foreground="#fefefe"
                         >
-                            <Run Text="{Binding PingSuccessText}"></Run>
-                            <Run Foreground="Orange">254ms</Run>
-
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
@@ -224,25 +231,10 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock 
-                                FontSize="12"
-                                TextAlignment="Center"
-                                Foreground="#fefefe"
-                            >
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding LoadingServer}" Value="True">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                                <Run Foreground="LightGreen" Text="{Binding SelectedServer.OnlineUsers}"></Run>
-                                <Run Foreground="LightGray">/</Run>
-                                <Run Foreground="Orange" Text="{Binding SelectedServer.TotalUsers}"></Run> 
-                                <Run Foreground="LightGray" Text="{Binding PlayersOnlineText}"></Run>
+                            <Run Foreground="LightGreen" Text="{Binding SelectedServer.OnlineUsers}"></Run>
+                            <Run Foreground="LightGray">/</Run>
+                            <Run Foreground="Orange" Text="{Binding SelectedServer.TotalUsers}"></Run> 
+                            <Run Foreground="LightGray" Text="{Binding PlayersOnlineText}"></Run>
                         </TextBlock>
                     </StackPanel>
                 </Grid>

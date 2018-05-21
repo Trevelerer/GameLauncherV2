@@ -26,8 +26,9 @@
 		"labels.players_online": "players online",
 		
 		"ping.disabled": "Ping is disabled on non-Windows platforms.",
-		"ping.failed": "Failed to ping the server.",
-		"ping.success": "Ping: ",
+		"ping.failed": "Failed to ping the server: {0}",
+    "ping.success": "Ping: {0}ms",
+    "ping.pinging":  "Pinging...", 
 		
 		"status.loading": "Loading...",
 		"status.verifying": "Verifying hashes...",

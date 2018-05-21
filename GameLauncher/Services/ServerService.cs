@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
@@ -48,7 +50,8 @@ namespace GameLauncher.Services
                     Address = new Uri(address),
                     Group = currentGroup,
                     Banner = banner,
-                    Status = ServerStatus.Unknown
+                    Status = ServerStatus.Unknown,
+                    PingStatus = PingStatus.Unknown
                 });
             }
 
@@ -69,7 +72,7 @@ namespace GameLauncher.Services
             if (serverInformation.BannerUrl.Length == 0)
             {
                 banner.BeginInit();
-                banner.UriSource = new Uri("/Resources/Banners/Aaron_Lewis_Banner.png", UriKind.Relative);
+                banner.UriSource = new Uri("/Resources/Banners/Default_Banner.png", UriKind.Relative);
                 banner.EndInit();
             }
             else
@@ -82,6 +85,23 @@ namespace GameLauncher.Services
             }
 
             return banner;
+        }
+
+        public async Task<PingReply> PingServer(Server server)
+        {
+            var pingSender = new Ping();
+            const int timeout = 5000;
+
+            var options = new PingOptions(64, true);
+            const string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            var response = await pingSender.SendPingAsync(
+                server.Address.DnsSafeHost, 
+                timeout, 
+                Encoding.ASCII.GetBytes(data), 
+                options);
+
+            return response;
         }
     }
 }

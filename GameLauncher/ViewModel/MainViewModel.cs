@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using System.Net.Http;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -41,7 +42,7 @@ namespace GameLauncher.ViewModel
         private string _rememberCredentialsText;
         private string _loggedInAsText;
         private string _playersOnlineText;
-        private string _pingSuccessText, _pingFailedText, _pingDisabledText;
+        private string _pingText;
 
         private readonly DownloadManager _downloadManager;
 
@@ -140,30 +141,12 @@ namespace GameLauncher.ViewModel
                 RaisePropertyChanged();
             }
         }
-        public string PingSuccessText
+        public string PingText
         {
-            get => _pingSuccessText;
+            get => _pingText;
             set
             {
-                _pingSuccessText = value;
-                RaisePropertyChanged();
-            }
-        }
-        public string PingFailedText
-        {
-            get => _pingFailedText;
-            set
-            {
-                _pingFailedText = value;
-                RaisePropertyChanged();
-            }
-        }
-        public string PingDisabledText
-        {
-            get => _pingDisabledText;
-            set
-            {
-                _pingDisabledText = value;
+                _pingText = value;
                 RaisePropertyChanged();
             }
         }
@@ -347,9 +330,6 @@ namespace GameLauncher.ViewModel
             RememberCredentialsText = LanguagePack.GetPhrase("labels.remember_credentials");
             LoggedInAsText = LanguagePack.GetPhrase("labels.logged_in_as");
             PlayersOnlineText = LanguagePack.GetPhrase("labels.players_online");
-            PingSuccessText = LanguagePack.GetPhrase("ping.success");
-            PingFailedText = LanguagePack.GetPhrase("ping.failed");
-            PingDisabledText = LanguagePack.GetPhrase("ping.disabled");
         }
 
         /// <summary>
@@ -414,6 +394,8 @@ namespace GameLauncher.ViewModel
 
             listServer.Status = ServerStatus.Unknown;
 
+            PingText = "";
+
             try
             {
                 var serverInfo = await _serverService.FetchServer(infoUrl);
@@ -427,9 +409,29 @@ namespace GameLauncher.ViewModel
                     _bannerCache[serverIndex] = banner;
                 }
 
+                listServer.PingStatus = PingStatus.Pinging;
                 listServer.OnlineUsers = serverInfo.OnlineUsers;
                 listServer.TotalUsers = serverInfo.TotalUsers;
                 listServer.Status = ServerStatus.Online;
+
+                LoadingServer = false;
+
+                PingText = LanguagePack.GetPhrase("ping.pinging");
+
+                var pingResponse = await _serverService.PingServer(listServer);
+
+                if (pingResponse.Status == IPStatus.Success)
+                {
+                    listServer.PingStatus = PingStatus.Pinged;
+                    listServer.Ping = pingResponse.RoundtripTime;
+                    PingText = LanguagePack.GetPhrase("ping.success", pingResponse.RoundtripTime);
+                }
+                else
+                {
+                    listServer.PingStatus = PingStatus.PingFailed;
+                    listServer.Ping = 0;
+                    PingText = LanguagePack.GetPhrase("ping.failed", pingResponse.Status);
+                }
 
                 LoginInputEnabled = true;
                 UpdateLoginStatus();
@@ -437,9 +439,8 @@ namespace GameLauncher.ViewModel
             catch (HttpRequestException)
             {
                 listServer.Status = ServerStatus.Offline;
+                LoadingServer = false;
             }
-
-            LoadingServer = false;
         }
 
         /// <summary>

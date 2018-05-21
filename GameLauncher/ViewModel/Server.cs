@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace GameLauncher.ViewModel
@@ -15,84 +11,114 @@ namespace GameLauncher.ViewModel
         Unknown
     }
 
+    public enum PingStatus
+    {
+        Pinged,
+        PingFailed,
+        Pinging,
+        Unknown,
+    }
+
     public class Server : INotifyPropertyChanged
     {
-        private string name;
-        private Uri address;
-        private string group;
-        private BitmapImage banner;
-        private ServerStatus status;
-        private uint onlineUsers;
-        private uint totalUsers;
+        private string _name;
+        private Uri _address;
+        private string _group;
+        private BitmapImage _banner;
+        private ServerStatus _status;
+        private uint _onlineUsers;
+        private uint _totalUsers;
+        private long _ping;
+        private PingStatus _pingStatus;
 
         public string Name
         {
-            get => name;
+            get => _name;
             set
             {
-                name = value;
+                _name = value;
                 RaisePropertyChanged("Name");
             }
         }
 
         public Uri Address
         {
-            get => address;
+            get => _address;
             set
             {
-                address = value;
+                _address = value;
                 RaisePropertyChanged("Address");
             }
         }
 
         public string Group
         {
-            get => group;
+            get => _group;
 
             set
             {
-                group = value;
+                _group = value;
                 RaisePropertyChanged("Group");
             }
         }
 
         public BitmapImage Banner
         {
-            get => banner;
+            get => _banner;
             set
             {
-                banner = value;
+                _banner = value;
                 RaisePropertyChanged("Banner");
             }
         }
 
         public ServerStatus Status
         {
-            get => status;
+            get => _status;
             set
             {
-                status = value;
+                _status = value;
                 RaisePropertyChanged("Status");
             }
         }
 
         public uint OnlineUsers
         {
-            get => onlineUsers;
+            get => _onlineUsers;
             set
             {
-                onlineUsers = value;
+                _onlineUsers = value;
                 RaisePropertyChanged("OnlineUsers");
             }
         }
 
         public uint TotalUsers
         {
-            get => totalUsers;
+            get => _totalUsers;
             set
             {
-                totalUsers = value;
+                _totalUsers = value;
                 RaisePropertyChanged("TotalUsers");
+            }
+        }
+
+        public long Ping
+        {
+            get => _ping;
+            set
+            {
+                _ping = value;
+                RaisePropertyChanged("Ping");
+            }
+        }
+
+        public PingStatus PingStatus
+        {
+            get => _pingStatus;
+            set
+            {
+                _pingStatus = value;
+                RaisePropertyChanged("PingStatus");
             }
         }
 
@@ -102,7 +128,7 @@ namespace GameLauncher.ViewModel
         {
             var handlers = PropertyChanged;
 
-            handlers(this, new PropertyChangedEventArgs(propertyName));
+            handlers?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
