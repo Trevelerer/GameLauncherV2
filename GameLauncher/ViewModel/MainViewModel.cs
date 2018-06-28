@@ -548,6 +548,7 @@ namespace GameLauncher.ViewModel
 
             if (process == null)
             {
+                ServerProxy.Instance.SetServerUrl(null);
                 _dialogService.ShowError(LanguagePack.GetPhrase("errors.launch_failed"));
                 return;
             }
@@ -650,6 +651,7 @@ namespace GameLauncher.ViewModel
             GameRunning = false;
 
             DoLogout();
+            ServerProxy.Instance.SetServerUrl(null);
         }
     }
 }

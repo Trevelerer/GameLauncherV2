@@ -23,6 +23,12 @@ namespace GameLauncher.Classes.Proxy
         private static Response ProxyRequest(NancyContext context)
         {
             var serverUrl = ServerProxy.Instance.GetServerUrl();
+
+            if (string.IsNullOrEmpty(serverUrl))
+            {
+                return new TextResponse(HttpStatusCode.BadGateway, "Not open for business");
+            }
+
             var fixedPath = context.Request.Path.Replace("/nfsw/Engine.svc", "");
             var fullUrl = new Uri(serverUrl).Append(fixedPath);
 
