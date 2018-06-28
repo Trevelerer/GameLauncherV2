@@ -8,7 +8,8 @@
         Title="Settings" 
         Height="300" Width="300" 
         WindowStartupLocation="CenterOwner" 
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="SlateGray">
     <Grid>
         
     </Grid>

@@ -39,16 +39,35 @@ namespace GameLauncher.Services
                 if (!line.Contains(';')) continue;
 
                 // Split the info into parts.
-                // First part is the name, second is the address
+                // First part is the name, second is the address, third is some sort of identifier?
                 var parts = line.Split(';');
-                var name = parts[parts.Length - 2];
-                var address = parts[parts.Length - 1];
+                var name = parts[parts.Length - 3];
+                var address = parts[parts.Length - 2];
 
                 servers.Add(new Server
                 {
                     Name = name,
                     Address = new Uri(address),
                     Group = currentGroup,
+                    Banner = banner,
+                    Status = ServerStatus.Unknown,
+                    PingStatus = PingStatus.Unknown
+                });
+            }
+
+            if (!File.Exists("servers.json")) return servers;
+
+            var serverList = JsonConvert.DeserializeObject<List<CustomServer>>(
+                File.ReadAllText("servers.json")
+            );
+
+            foreach (var server in serverList)
+            {
+                servers.Add(new Server
+                {
+                    Name = server.Name,
+                    Address = new Uri(server.Address),
+                    Group = "Custom Servers",
                     Banner = banner,
                     Status = ServerStatus.Unknown,
                     PingStatus = PingStatus.Unknown
@@ -99,7 +118,8 @@ namespace GameLauncher.Services
                 server.Address.DnsSafeHost, 
                 timeout, 
                 Encoding.ASCII.GetBytes(data), 
-                options);
+                options
+            );
 
             return response;
         }

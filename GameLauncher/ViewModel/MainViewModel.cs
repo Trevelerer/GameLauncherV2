@@ -330,6 +330,10 @@ namespace GameLauncher.ViewModel
             RememberCredentialsText = LanguagePack.GetPhrase("labels.remember_credentials");
             LoggedInAsText = LanguagePack.GetPhrase("labels.logged_in_as");
             PlayersOnlineText = LanguagePack.GetPhrase("labels.players_online");
+
+            RpcManager.Init();
+            GameInfoBridge.Instance.Start();
+            ServerProxy.Instance.Start();
         }
 
         /// <summary>
@@ -400,7 +404,7 @@ namespace GameLauncher.ViewModel
             {
                 var serverInfo = await _serverService.FetchServer(infoUrl);
 
-                if (!_bannerCache.ContainsKey(serverIndex))
+                if (!_bannerCache.ContainsKey(serverIndex) && Uri.TryCreate(serverInfo.BannerUrl, UriKind.Absolute, out _))
                 {
                     var banner = await _serverService.FetchServerBanner(serverInfo);
 
@@ -481,7 +485,6 @@ namespace GameLauncher.ViewModel
                 AuthState.Email = _email;
 
                 _dialogService.ShowNotification(LanguagePack.GetPhrase("login.success"));
-                //_dialogService.ShowNotification("Login successful!", "Login");
             }
 
             LoginInputEnabled = true;
@@ -518,7 +521,6 @@ namespace GameLauncher.ViewModel
             if (!_authState.LoggedIn)
             {
                 _dialogService.ShowError(LanguagePack.GetPhrase("errors.not_logged_in"));
-                //_dialogService.ShowError("You're not logged in. Huh?");
                 return;
             }
 
@@ -527,16 +529,18 @@ namespace GameLauncher.ViewModel
             if (!File.Exists(Path.Combine(directory, "nfsw.exe")))
             {
                 _dialogService.ShowError(LanguagePack.GetPhrase("errors.game_not_found"));
-                //_dialogService.ShowError("Couldn't find the game executable. Please restart the launcher.");
                 Environment.Exit(1);
             }
 
             var server = Servers[AuthState.ServerID];
+
+            ServerProxy.Instance.SetServerUrl(server.Address.ToString());
+
             var psi = new ProcessStartInfo
             {
                 FileName = Path.Combine(directory, "nfsw.exe"),
                 UseShellExecute = true,
-                Arguments = $"US {server.Address} {AuthState.LoginToken} {AuthState.UserID}",
+                Arguments = $"US http://127.0.0.1:6262/nfsw/Engine.svc {AuthState.LoginToken} {AuthState.UserID}",
                 WorkingDirectory = directory
             };
 

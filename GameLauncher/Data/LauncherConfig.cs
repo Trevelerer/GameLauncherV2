@@ -40,5 +40,11 @@ namespace GameLauncher.Data
 
         [JsonProperty]
         public string GameDirectory { get; set; }
+
+        [JsonProperty]
+        public bool RememberCredentials { get; set; }
+
+        [JsonProperty]
+        public string RememberedEmail { get; set; }
     }
 }

@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 
 namespace GameLauncher.Classes
 {
     public class WebManager
     {
-        private static HttpClient client = null;
-        private static readonly object _clientLock = new object();
+        private static HttpClient _client;
+        private static readonly object ClientLock = new object();
 
-        WebManager() { }
+        private WebManager() { }
 
         public static HttpClient Client
         {
             get
             {
-                lock (_clientLock)
+                lock (ClientLock)
                 {
-                    if (client == null)
-                    {
-                        client = new HttpClient();
-                    }
-
-                    return client;
+                    return _client ?? (_client = new HttpClient());
                 }
             }
         }
