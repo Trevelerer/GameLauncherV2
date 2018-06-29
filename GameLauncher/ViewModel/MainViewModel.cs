@@ -300,6 +300,8 @@ namespace GameLauncher.ViewModel
             _bannerCache = new Dictionary<int, BitmapImage>();
             _downloadManager = new DownloadManager();
 
+            _downloadManager.DownloadFailed.Add(exception => _dialogService.ShowError(exception.Message));
+
             // Create commands
             FetchServersCommand = new RelayCommand(FetchServers);
             SelectServerCommand = new RelayCommand<Server>(SelectServer);
@@ -351,6 +353,9 @@ namespace GameLauncher.ViewModel
                 GameLanguage = "en"
             });
 
+            cdnSource.VerificationFailed.Add((file, hash, actualHash) => 
+                _dialogService.ShowError($"Failed to verify file: {file.Replace(directory, "")}. Re-download game files."));
+
             _downloadManager.Sources.Add(cdnSource);
 
             // If the directory in the config file doesn't exist, create it
@@ -366,17 +371,28 @@ namespace GameLauncher.ViewModel
                 _downloadState.Phase = DownloadPhase.Downloading;
                 await _downloadManager.Download();
                 GC.Collect();
-                cdnSource.VerificationProgressUpdated.Add(OnVerificationProgressUpdated);
-                cdnSource.VerificationFailed.Add(OnVerificationFailed);
+                //cdnSource.VerificationProgressUpdated.Add(OnVerificationProgressUpdated);
+                //cdnSource.VerificationFailed.Add(OnVerificationFailed);
 
-                _downloadState.Phase = DownloadPhase.Verifying;
-                StatusText = LanguagePack.GetPhrase("status.verifying");
-                await _downloadManager.VerifyHashes();
-                StatusText = LanguagePack.GetPhrase("status.download.complete");
+                //_downloadState.Phase = DownloadPhase.Verifying;
+                //StatusText = LanguagePack.GetPhrase("status.verifying");
+                //await _downloadManager.VerifyHashes();
+                //StatusText = LanguagePack.GetPhrase("status.download.complete");
 
-                _downloadState.Phase = DownloadPhase.Inactive;
-                UpdateLoginStatus();
+                //_downloadState.Phase = DownloadPhase.Inactive;
+                //UpdateLoginStatus();
             }
+
+            //cdnSource.VerificationProgressUpdated.Add(OnVerificationProgressUpdated);
+            //cdnSource.VerificationFailed.Add(OnVerificationFailed);
+
+            _downloadState.Phase = DownloadPhase.Verifying;
+            StatusText = LanguagePack.GetPhrase("status.verifying");
+            await _downloadManager.VerifyHashes();
+            StatusText = LanguagePack.GetPhrase("status.download.complete");
+
+            _downloadState.Phase = DownloadPhase.Inactive;
+            UpdateLoginStatus();
 
             StatusText = LanguagePack.GetPhrase("status.ready");
         }
