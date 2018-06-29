@@ -353,8 +353,12 @@ namespace GameLauncher.ViewModel
                 GameLanguage = "en"
             });
 
-            cdnSource.VerificationFailed.Add((file, hash, actualHash) => 
-                _dialogService.ShowError($"Failed to verify file: {file.Replace(directory, "")}. Re-download game files."));
+            cdnSource.VerificationFailed.Add((file, hash, actualHash) =>
+            {
+                _dialogService.ShowError(
+                    $"Failed to verify file: {file.Replace(directory, "")}. Re-download game files.");
+                Process.GetCurrentProcess().Kill();
+            });
 
             _downloadManager.Sources.Add(cdnSource);
 

@@ -48,5 +48,10 @@ namespace GameLauncher.Classes
             }, new Uri("http://127.0.0.1:6262"));
             _host.Start();
         }
+
+        public void Stop()
+        {
+            _host?.Stop();
+        }
     }
 }
