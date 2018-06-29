@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Windows;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
@@ -300,7 +301,19 @@ namespace GameLauncher.ViewModel
             _bannerCache = new Dictionary<int, BitmapImage>();
             _downloadManager = new DownloadManager();
 
-            _downloadManager.DownloadFailed.Add(exception => _dialogService.ShowError(exception.Message));
+            var dispatcher = Dispatcher.CurrentDispatcher;
+
+            _downloadManager.DownloadFailed.Add(exception =>
+            {
+                Console.Error.WriteLine(exception.Message);
+                Console.Error.WriteLine(exception.StackTrace);
+
+                if (!(exception is AggregateException))
+                {
+                    _dialogService.ShowError($"Downloader Error: {exception.Message}");
+                    dispatcher.Invoke(() => Application.Current.Shutdown());
+                }
+            });
 
             // Create commands
             FetchServersCommand = new RelayCommand(FetchServers);
@@ -353,12 +366,7 @@ namespace GameLauncher.ViewModel
                 GameLanguage = "en"
             });
 
-            cdnSource.VerificationFailed.Add((file, hash, actualHash) =>
-            {
-                _dialogService.ShowError(
-                    $"Failed to verify file: {file.Replace(directory, "")}. Re-download game files.");
-                Process.GetCurrentProcess().Kill();
-            });
+            cdnSource.VerificationFailed.Add(OnVerificationFailed);
 
             _downloadManager.Sources.Add(cdnSource);
 
@@ -549,7 +557,7 @@ namespace GameLauncher.ViewModel
             if (!File.Exists(Path.Combine(directory, "nfsw.exe")))
             {
                 _dialogService.ShowError(LanguagePack.GetPhrase("errors.game_not_found"));
-                Environment.Exit(1);
+                Application.Current.Shutdown(-1);
             }
 
             var server = Servers[AuthState.ServerID];
@@ -612,25 +620,6 @@ namespace GameLauncher.ViewModel
         }
 
         /// <summary>
-        /// Handles verification progress update events.
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="displayFile"></param>
-        /// <param name="filenumber"></param>
-        /// <param name="totalFiles"></param>
-        private void OnVerificationProgressUpdated(string file, string displayFile, uint filenumber, uint totalFiles)
-        {
-            StatusText = LanguagePack.GetPhrase("status.verifying.progress", displayFile);
-
-            // progress bar is 519px
-
-            var frac = filenumber / (double)totalFiles;
-            var bar = 519 - (519 * frac);
-
-            DownloadState.BarPercentage = new Thickness(0, 0, bar, 0);
-        }
-
-        /// <summary>
         /// Handles the verification failed event.
         /// </summary>
         /// <param name="file"></param>
@@ -646,8 +635,9 @@ namespace GameLauncher.ViewModel
                 ), 
                 "Downloader"
             );
+
+            Environment.Exit(-1);
             //_dialogService.ShowError($"Verifying file {file} failed. Expected hash {expectedhash}, got {actualhash}. Please delete your game files and try again.", "Downloader");
-            Environment.Exit(1);
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,6 +50,13 @@ namespace GameLauncher
 
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
+                    if (File.Exists(Path.Combine(dialog.FileName, "nfsw.exe")))
+                    {
+                        MessageBox.Show("Selected folder already contains Need for Speed: World.", "Error", MessageBoxButton.OK);
+                        Current.Shutdown(-1);
+                        return;
+                    }
+
                     Configuration.Instance.Create(dialog.FileName);
 
                     var mainWindow = new MainWindow();
@@ -62,6 +70,13 @@ namespace GameLauncher
                 }
             } else
             {
+                if (Process.GetProcessesByName("nfsw.exe").Length >= 1)
+                {
+                    MessageBox.Show("An instance of NFSW is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Current.Shutdown(-1);
+                    return;
+                }
+
                 var mainWindow = new MainWindow();
                 Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 Current.MainWindow = mainWindow;
